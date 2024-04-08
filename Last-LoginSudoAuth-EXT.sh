@@ -50,9 +50,9 @@ if [[ $LogDumpAuth == "" ]] # Check if log result indicates User has Authenticat
 		if [[ $LogDumpSudo == "" ]]  # Check if log result indicates User has been SUDO'd
 			then
 				LogDumpLogin=$(log show --style syslog --last $Range | grep 'User "'$User'" is logged in') # Look for "Log In" for the User
-                if [[ $LogDumpLogin == "" ]]  # Check if log result indicates User has Logged In
+				if [[ $LogDumpLogin == "" ]]  # Check if log result indicates User has Logged In
 					then
-						/bin/echo "NO"
+						/bin/echo "<result>NO</result>"
 					else
 						/bin/echo "<result>LOGIN</result>"
 				fi
