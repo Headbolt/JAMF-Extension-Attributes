@@ -40,8 +40,6 @@ User="Nigel" # Set Account to Look for
 #
 ###############################################################################################################################################
 #
-/bin/echo # Outputting a Blank Line for Reporting Purposes
-#
 LogDumpAuth=$(log show --style syslog --last $Range | grep "Validating credential $User") # Look for "Validating credential" for the User
 
 if [[ $LogDumpAuth == "" ]] # Check if log result indicates User has Authenticated
