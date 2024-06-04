@@ -16,9 +16,13 @@
 #
 # HISTORY
 #
-#	Version: 1.0 - 18/04/2024
+#	Version: 1.1 - 03/06/2024
 #
 #	18/04/2014 - V1.0 - Created by Headbolt
+#
+#	03/06/2024 - V1.1 - Updated by Headbolt
+#				As of macOS 14.5.0, "wdutil info" returns SSID and BSSID as "<redacted>"
+#				New version works around it by using "networksetup -getairportnetwork en0"
 #
 ###############################################################################################################################################
 # 
@@ -30,23 +34,13 @@
 #
 ###############################################################################################################################################
 #
-IFS=':' # Internal Field Seperator Delimiter is set to colon (:)
-if [ $ZSH_VERSION ] # Check if shell is ZSH and if so enable IFS
-	then
-		setopt sh_word_split
-fi
-#
-SSID=$(wdutil info | grep " SSID" | awk '{print $3}') # Grab latest Networking Info, and filter to get the current SSID In Use
-BSSID=$(wdutil info | grep "BSSID" | awk '{print $3}') # Grab latest Networking Info, and filter to get the current BSSID In Use
-#
-IFS=' ' # Internal Field Seperator Delimiter is set to space ( )
-unset ifs # set the IFS back to normal
-#
-if [ "$SSID" == "" ]
+ConnectedSSID=$(networksetup -getairportnetwork en0 | awk -F': ' '{print $2}')
+
+if [ "$ConnectedSSID" == "" ]
 	then
 		RESULT="No WiFi Data Gathered"
 	else
-		RESULT=$(/bin/echo "SSID = $SSID - BSSID = $BSSID")
+		RESULT=$(/bin/echo "SSID = $ConnectedSSID")
 fi
-#
+
 /bin/echo "<result>$RESULT</result>"
