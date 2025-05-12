@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 ###############################################################################################################################################
 #
@@ -16,9 +16,12 @@
 #
 # HISTORY
 #
-#	Version: 1.0 - 01/03/2023
+#	Version: 1.1 - 12/15/2025
 #
 #	01/03/2023 - V1.0 - Created by Headbolt
+#
+#	12/05/2025 - V1.1 - Updated by Headbolt
+#							Legislating for Unsupported devices returning huge amounts of rubbish
 #
 ###############################################################################################################################################
 # 
@@ -30,4 +33,21 @@
 #
 ###############################################################################################################################################
 #
-/bin/echo "<result>$(/usr/sbin/firmwarepasswd -check | awk '{print $NF}')</result>"
+firmwarepasswd=$(/usr/sbin/firmwarepasswd -check  2>&1)
+#
+if [[ $(/bin/echo $firmwarepasswd | awk '{print $NF}') == "No" ]]
+	then
+        /bin/echo "<result>$(/bin/echo $firmwarepasswd | awk '{print $NF}')</result>"
+	else
+		if [[ $(/bin/echo $firmwarepasswd | awk '{print $NF}') == "Yes" ]]
+			then
+				/bin/echo "<result>$(/bin/echo $firmwarepasswd | awk '{print $NF}')</result>"
+			else
+				if [[ $(/bin/echo $firmwarepasswd | grep "The firmware on this machine is not supported") != "" ]]
+					then
+						/bin/echo "<result>"The firmware on this machine is not supported"</result>"
+					else
+						/bin/echo "<result>No Result</result>"
+				fi
+		fi
+fi
