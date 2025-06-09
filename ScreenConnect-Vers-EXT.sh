@@ -34,6 +34,6 @@
 ScreenConnectTennantID="<tennant id>" # Sets the Tennant ID for reference
 ScreenConnectAPP="<prefix name . eg ScreenConnect, or connectWisecontrol>-"$ScreenConnectTennantID".app" # Sets the App Name Prefixes and Suffixes for reference
 #
-ScreenConnectVersion=$(defaults read /applications/$ScreenConnectAPP/Contents/Info.plist CFBundleVersion) # Get the current version of Zscaler client
+ScreenConnectVersion=$(defaults read /applications/$ScreenConnectAPP/Contents/Info.plist CFBundleShortVersionString) # Get the current version of Zscaler client
 #
 /bin/echo "<result>$ScreenConnectVersion</result>"
