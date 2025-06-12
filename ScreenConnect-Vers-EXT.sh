@@ -17,9 +17,12 @@
 #
 # HISTORY
 #
-#	Version: 1.0 - 09/06/2025
+#	Version: 1.1 - 12/06/2025
 #
 #	09/06/2025 - V1.0 - Created by Headbolt
+#
+#	12/06/2025 - V1.1 - Updated by Headbolt
+#							Now Gives an output version of "00.00" when no version is returned, indicating Software missing
 #
 ###############################################################################################################################################
 # 
@@ -36,4 +39,9 @@ ScreenConnectAPP="<prefix name . eg ScreenConnect, or connectWisecontrol>-"$Scre
 #
 ScreenConnectVersion=$(defaults read /applications/$ScreenConnectAPP/Contents/Info.plist CFBundleShortVersionString) # Get the current version of Zscaler client
 #
-/bin/echo "<result>$ScreenConnectVersion</result>"
+if [[ -n "$ScreenConnectVersion" ]]
+	then
+		/bin/echo "<result>$ScreenConnectVersion</result>"
+	else
+		/bin/echo "<result>00.00</result>"
+fi
