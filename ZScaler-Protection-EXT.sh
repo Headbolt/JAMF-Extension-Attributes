@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 #
 ###############################################################################################################################################
 #
@@ -16,9 +16,13 @@
 #
 # HISTORY
 #
-#	Version: 1.0 - 10/04/2025
+#	Version: 1.1 - 12/06/2025
 #
 #	10/04/2025 - V1.0 - Created by Headbolt
+#
+#	12/06/2025 - V1.1 - Updated by Headbolt
+#							Now Allows for No user logged into the Mac, which would otherwise
+#							return a status of NOT Protected
 #
 ###############################################################################################################################################
 # 
@@ -30,12 +34,24 @@
 #
 ###############################################################################################################################################
 #
-PROCESS="ZscalerTunnel"
-ProcessRunning=$(sudo pgrep -x $PROCESS)
+CurrentUser=$(stat -f%Su /dev/console) # Grab Current Username
 #
-if [ "$ProcessRunning" != "" ]
+if [ "$CurrentUser" != "root" ]
 	then
-		/bin/echo '<result>Protected</result>'
-	else 
-		/bin/echo '<result>NOT Protected</result>'
+		PROCESS="ZscalerTunnel"
+		ProcessRunning=$(pgrep -x $PROCESS)    
+		#
+		if [ "$ProcessRunning" != "" ]
+			then
+				/bin/echo '<result>Protected</result>'
+			else 
+			/bin/echo '<result>NOT Protected</result>'
+		fi
+	else
+		ZScalerVersion=$(sudo defaults read /Applications/Zscaler/Zscaler.app/Contents/Info.plist CFBundleShortVersionString) # Get the current version of Zscaler client
+		#
+		if [[ -n "$ZScalerVersion" ]]
+			then
+				/bin/echo "<result>Installed</result>"
+		fi
 fi
