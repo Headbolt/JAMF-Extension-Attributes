@@ -17,9 +17,12 @@
 #
 # HISTORY
 #
-#	Version: 1.0 - 26/02/2025
+#	Version: 1.1 - 12/06/2025
 #
 #	26/02/2025 - V1.0 - Created by Headbolt
+#
+#	12/06/2025 - V1.1 - Updated by Headbolt
+#							Now Gives an output version of "00.00" when no version is returned, indicating Software missing
 #
 ###############################################################################################################################################
 # 
@@ -31,6 +34,11 @@
 #
 ###############################################################################################################################################
 #
-ZScalerVersion=$(defaults read /applications/Zscaler/Zscaler.app/Contents/Info.plist CFBundleShortVersionString) # Get the current version of Zscaler client
+ZScalerVersion=$(sudo defaults read /Applications/Zscaler/Zscaler.app/Contents/Info.plist CFBundleShortVersionString) # Get the current version of Zscaler client
 #
-/bin/echo "<result>$ZScalerVersion</result>"
+if [[ -n "$ZScalerVersion" ]]
+	then
+		/bin/echo "<result>$ZScalerVersion</result>"
+	else
+		/bin/echo "<result>00.00</result>"
+fi
