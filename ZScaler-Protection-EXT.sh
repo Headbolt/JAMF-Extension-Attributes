@@ -16,13 +16,16 @@
 #
 # HISTORY
 #
-#	Version: 1.1 - 12/06/2025
+#	Version: 1.2 - 16/07/2025
 #
 #	10/04/2025 - V1.0 - Created by Headbolt
 #
 #	12/06/2025 - V1.1 - Updated by Headbolt
 #							Now Allows for No user logged into the Mac, which would otherwise
 #							return a status of NOT Protected
+#
+#	16/07/2025 - V1.2 - Updated by Headbolt
+#							Now Allows for Zscaler not being installed, so we avoiid a Blank result
 #
 ###############################################################################################################################################
 # 
@@ -53,5 +56,7 @@ if [ "$CurrentUser" != "root" ]
 		if [[ -n "$ZScalerVersion" ]]
 			then
 				/bin/echo "<result>Installed</result>"
+			else
+				/bin/echo "<result>Not Installed</result>"
 		fi
 fi
