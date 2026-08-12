@@ -5,7 +5,7 @@
 # ABOUT THIS PROGRAM
 #
 #	Comment-JAMF-EA.sh
-#	https://github.com/Headbolt/Comment-JAMF-EA
+#	https://github.com/Headbolt/JAMF-Extension-Attributes
 #
 #   This Script is designed for use in JAMF
 #
